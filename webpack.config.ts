@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as glob from 'glob';
 import * as webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import StatoscopePlugin from '@statoscope/webpack-plugin';
@@ -7,12 +8,14 @@ import StatoscopePlugin from '@statoscope/webpack-plugin';
 
 const config: webpack.Configuration = {
     mode: 'production',
-    entry: {
-        // @todo настроить entry
-    },
+    entry: glob.sync('./src/pages/**.tsx').reduce<Record<string, string>>(function(obj, el){
+        obj[path.parse(el).name] = el;
+        return obj
+    },{}),
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[contenthash].js',
+        clean: true,
     },
     plugins: [
         new HtmlWebpackPlugin(),
@@ -24,12 +27,12 @@ const config: webpack.Configuration = {
     ],
 
     resolve: {
-        // @todo настроить resolve
+        extensions: [".ts", ".tsx", ".js"],
     },
     module: {
         rules: [
-            // @todo настроить загрузчик
-        ],
+            { test: /\.([cm]?ts|tsx)$/, use: [ 'i18n-loader', "ts-loader"] }
+        ]
     },
     resolveLoader: {
         alias: {

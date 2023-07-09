@@ -1,1 +1,1 @@
-export default (key: string) => { return key }
+export default (key: string) => { throw new Error() }
