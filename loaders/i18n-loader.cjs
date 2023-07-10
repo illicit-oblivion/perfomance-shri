@@ -9,6 +9,6 @@ module.exports = function (content) {
     return content.replaceAll(regex, ((_, i18nArgs) => {
         const key = eval(i18nArgs);
 
-        return  texts[key];
+        return '\'' + texts[key] + '\'';
     }));
 }

@@ -31,7 +31,7 @@ const config: webpack.Configuration = {
     },
     module: {
         rules: [
-            { test: /\.([cm]?ts|tsx)$/, use: [ 'i18n-loader', "ts-loader"] }
+            { test: /\.([cm]?ts|tsx)$/, use: [ "ts-loader", 'i18n-loader'] }
         ]
     },
     resolveLoader: {
